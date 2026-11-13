@@ -73,18 +73,18 @@ if st.button("Analyze Complaint"):
 
         # Human review
       if category_confidence < 60 or urgency_confidence < 60:
-    st.warning("Human Review Required")
+            st.warning("Human Review Required")
 
-    st.subheader("Human Review Panel")
+            st.subheader("Human Review Panel")
 
-    st.write("Please review the AI prediction.")
+            st.write("Please review the AI prediction.")
 
-    review_decision = st.radio(
-        "Review Decision",
+            review_decision = st.radio(
+                "Review Decision",
         ["Approve Prediction", "Reject Prediction"]
     )
 
-    corrected_category = st.selectbox(
+            corrected_category = st.selectbox(
         "Correct Category (if needed)",
         ["Technical", "Account", "Billing", "Delivery", "Other"]
     )
