@@ -1,4 +1,3 @@
-
 import streamlit as st
 import joblib
 
@@ -59,7 +58,7 @@ if st.button("Analyze Complaint"):
         st.subheader("AI Prediction Results")
         st.write("Category:", category)
         st.write("Urgency:", urgency)
-        st.write("Assigned Team:", teams[category])
+        st.write("Assigned Team:", teams.get(category, "General Support Team"))
 
         st.write(
             "Category Confidence:",
@@ -72,7 +71,8 @@ if st.button("Analyze Complaint"):
         )
 
         # Human review
-      if category_confidence < 60 or urgency_confidence < 60:
+        if category_confidence < 60 or urgency_confidence < 60:
+
             st.warning("Human Review Required")
 
             st.subheader("Human Review Panel")
@@ -81,21 +81,27 @@ if st.button("Analyze Complaint"):
 
             review_decision = st.radio(
                 "Review Decision",
-        ["Approve Prediction", "Reject Prediction"]
-    )
-
-            corrected_category = st.selectbox(
-        "Correct Category (if needed)",
-        ["Technical", "Account", "Billing", "Delivery", "Other"]
-    )
-
-    if st.button("Submit Human Review"):
-        if review_decision == "Approve Prediction":
-            st.success("Prediction Approved!")
-        else:
-            st.success(
-                f"Prediction Rejected. Corrected category: {corrected_category}"
+                ["Approve Prediction", "Reject Prediction"]
             )
 
-else:
-    st.success("Automatically Assigned")
+            corrected_category = st.selectbox(
+                "Correct Category (if needed)",
+                ["Account", "Billing", "Product", "Technical"]
+            )
+
+            if st.button("Submit Human Review"):
+                if review_decision == "Approve Prediction":
+                    st.success("Prediction Approved!")
+                else:
+                    st.success(
+                        f"Prediction Rejected. Corrected category: {corrected_category}"
+                    )
+
+        else:
+            st.success("Automatically Assigned")
+
+    else:
+        st.error("Please enter a customer complaint.")
+
+
+        
